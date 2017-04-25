@@ -1,0 +1,72 @@
+dependencies:
+  http-proxy@^1.16.2: 1.16.2
+  node-watch@^0.5.2: 0.5.2
+  spdy@^3.4.4: 3.4.4
+packages:
+  /buffer-shims/1.0.0: 9978ce317388c649ad8793028c3477ef044a8b51
+  /core-util-is/1.0.2: b5fd54220aa2bc5ab57aab7140c940754503c1a7
+  /debug/2.6.4:
+    dependencies:
+      ms: 0.7.3
+    resolution: 7586a9b3c39741c0282ae33445c4e8ac74734fe0
+  /eventemitter3/1.2.0: 1c86991d816ad1e504750e73874224ecf3bec508
+  /handle-thing/1.2.5: fd7aad726bf1a5fd16dfc29b2f7a6601d27139c4
+  /hpack.js/2.1.6:
+    dependencies:
+      inherits: 2.0.3
+      obuf: 1.1.1
+      readable-stream: 2.2.9
+      wbuf: 1.7.2
+    resolution: 87774c0949e513f42e84575b3c45681fade2a0b2
+  /http-deceiver/1.2.7: fa7168944ab9a519d337cb0bec7284dc3e723d87
+  /http-proxy/1.16.2:
+    dependencies:
+      eventemitter3: 1.2.0
+      requires-port: 1.0.0
+    resolution: 06dff292952bf64dbe8471fa9df73066d4f37742
+  /inherits/2.0.3: 633c2c83e3da42a502f52466022480f4208261de
+  /isarray/1.0.0: bb935d48582cba168c06834957a54a3e07124f11
+  /minimalistic-assert/1.0.0: 702be2dda6b37f4836bcb3f5db56641b64a1d3d3
+  /ms/0.7.3: 708155a5e44e33f5fd0fc53e81d0d40a91be1fff
+  /node-watch/0.5.2: 948d72ec5fe74b488332cd1087fa180e9c24825b
+  /obuf/1.1.1: 104124b6c602c6796881a042541d36db43a5264e
+  /process-nextick-args/1.0.7: 150e20b756590ad3f91093f25a4f2ad8bff30ba3
+  /readable-stream/2.2.9:
+    dependencies:
+      buffer-shims: 1.0.0
+      core-util-is: 1.0.2
+      inherits: 2.0.3
+      isarray: 1.0.0
+      process-nextick-args: 1.0.7
+      string_decoder: 1.0.0
+      util-deprecate: 1.0.2
+    resolution: cf78ec6f4a6d1eb43d26488cac97f042e74b7fc8
+  /requires-port/1.0.0: 925d2601d39ac485e091cf0da5c6e694dc3dcaff
+  /select-hose/2.0.0: 625d8658f865af43ec962bfc376a37359a4994ca
+  /spdy-transport/2.0.18:
+    dependencies:
+      debug: 2.6.4
+      hpack.js: 2.1.6
+      obuf: 1.1.1
+      readable-stream: 2.2.9
+      wbuf: 1.7.2
+    resolution: 43fc9c56be2cccc12bb3e2754aa971154e836ea6
+  /spdy/3.4.4:
+    dependencies:
+      debug: 2.6.4
+      handle-thing: 1.2.5
+      http-deceiver: 1.2.7
+      select-hose: 2.0.0
+      spdy-transport: 2.0.18
+    resolution: e0406407ca90ff01b553eb013505442649f5a819
+  /string_decoder/1.0.0:
+    dependencies:
+      buffer-shims: 1.0.0
+    resolution: f06f41157b664d86069f84bdbdc9b0d8ab281667
+  /util-deprecate/1.0.2: 450d4dc9fa70de732762fbd2d4a28981419a0ccf
+  /wbuf/1.7.2:
+    dependencies:
+      minimalistic-assert: 1.0.0
+    resolution: d697b99f1f59512df2751be42769c1580b5801fe
+registry: 'https://registry.npmjs.org/'
+version: 2

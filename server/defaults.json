@@ -1,0 +1,8 @@
+{
+  "ports": {
+    "http": 3000,
+    "https": 3443
+  },
+  "production": false,
+  "spdy": false
+}
