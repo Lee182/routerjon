@@ -2,14 +2,14 @@
   "name": "routerjon",
   "version": "0.0.3",
   "description": " An nodejs expressjs router, hopefully simple to run with npm scripts. Uses letsencrypt for https encryption.",
-  "main": "server.js",
+  "main": "server/index.js",
   "bin": {
     "routerjon": "server/index.js"
   },
   "scripts": {
-    "start": "jontest example/config.json",
+    "example": "routerjon example/config.json",
     "test:wait": "node test/wait.js 2000",
-    "test:router": "node server/index.js test/config.json",
+    "test:router": "routerjon test/config.json",
     "test:server": "node test/http_server.js",
     "test:ok": "node test/http_client.js",
     "test:start": "npm-run-all -p test:router test:server",
