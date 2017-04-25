@@ -1,0 +1,18 @@
+{
+  "ports": {
+    "http": 3000,
+    "https": 3443
+  },
+  "production": false,
+  "domains": [
+    "blogjono.com", "*.blogjono.com",
+    "opentorah.uk", "*.opentorah.uk"
+  ],
+  "email": "jono-lee@hotmail.co.uk",
+  "router": {
+    "blogjono.com": 9000,
+    "fcc-pin.blogjono.com": 9001,
+    "192.168.1.12:3443": 9001,
+    "opentorah.uk": 9100
+  }
+}
