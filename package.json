@@ -1,0 +1,24 @@
+{
+  "name": "routerjon",
+  "version": "0.0.0",
+  "description": " An nodejs expressjs router, hopefully simple to run with npm scripts. Uses letsencrypt for https encryption.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Lee182/routerjon.git"
+  },
+  "keywords": [
+    "nodejs",
+    "expressjs",
+    "letsencrypt"
+  ],
+  "author": "Jonathan T L Lee",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Lee182/routerjon/issues"
+  },
+  "homepage": "https://github.com/Lee182/routerjon#readme"
+}
