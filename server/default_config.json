@@ -4,5 +4,8 @@
     "https": 3443
   },
   "production": false,
-  "spdy": false
+  "spdy": false,
+  "domains": {
+    "localhost:3000": 9000
+  }
 }
