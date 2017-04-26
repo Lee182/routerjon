@@ -1,7 +1,7 @@
 {
   "name": "routerjon",
-  "version": "0.0.3",
-  "description": " An nodejs expressjs router, hopefully simple to run with npm scripts. Uses letsencrypt for https encryption.",
+  "version": "0.0.4",
+  "description": "An nodejs expressjs router, hopefully simple to run with npm scripts. Uses letsencrypt for https encryption.",
   "main": "server/index.js",
   "bin": {
     "routerjon": "server/index.js"
@@ -23,7 +23,9 @@
   "keywords": [
     "nodejs",
     "expressjs",
-    "letsencrypt"
+    "letsencrypt",
+    "https",
+    "router"
   ],
   "author": "Jonathan T L Lee",
   "license": "MIT",
