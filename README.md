@@ -81,6 +81,9 @@ routerjon ./config.json
 ```
 you may need sudo or root privallages to run the command with the server ports 80 and 443. you will also need to stop any other servers (like nginx, apache) listening on these ports
 
+## reload changes
+by default when you edit the config with valid json and save the file, changes will be automatically reloaded (thanks to node-watch). This makes it easy to vim into and fiddle with the routers port numbers
+
 ## details
 the script will store your certificates in the ```~/letsencrypt``` directory.
 
