@@ -10,11 +10,11 @@ var default_config = null
 var config = null
 var server = null
 
-if (process.argv.length === 2) {
-  console.log('please specify config file as first argument like')
-  console.log('$ routerjon ./config.json')
-}
-const config_path = process.argv[2]
+// if (process.argv.length === 2) {
+//   console.log('please specify config file as first argument like')
+//   console.log('$ routerjon ./config.json')
+// }
+const config_path = process.argv[2] || './config.json'
 const config_update = function(c) {
   c = _.merge(default_config, c)
   if (config !== null) {
