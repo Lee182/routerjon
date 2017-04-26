@@ -69,7 +69,15 @@ when routerjon crashes it will foreverjs process manager will restart it
 
 ```
 [sudo] npm i -g forever
-[sudo] forever start -c routerjon
+touch routerjon_forever
+```
+routerjon_forever file
+```
+#!/bin/sh
+routerjon ./config.json
+```
+```
+[sudo] forever start -c bash routerjon-forever
 ```
 you may need sudo or root privallages to run the command with the server ports 80 and 443. you will also need to stop any other servers (like nginx, apache) listening on these ports
 
