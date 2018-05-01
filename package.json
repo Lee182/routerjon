@@ -34,18 +34,18 @@
   },
   "homepage": "https://github.com/Lee182/routerjon#readme",
   "dependencies": {
-    "bluebird": "^3.5.0",
-    "greenlock-express": "^2.0.10",
-    "http-proxy": "^1.16.2",
+    "bluebird": "^3.5.1",
+    "greenlock-express": "^2.1.1",
+    "http-proxy": "^1.17.0",
     "le-challenge-fs": "^2.0.8",
     "le-store-certbot": "^2.0.5",
-    "lodash": "^4.17.4",
-    "node-watch": "^0.5.2",
-    "redirect-https": "^1.1.1",
-    "spdy": "^3.4.4"
+    "lodash": "^4.17.10",
+    "node-watch": "^0.5.8",
+    "redirect-https": "^1.1.5",
+    "spdy": "^3.4.7"
   },
   "devDependencies": {
-    "npm-run-all": "^4.0.2",
-    "request": "^2.81.0"
+    "npm-run-all": "^4.1.2",
+    "request": "^2.85.0"
   }
 }
