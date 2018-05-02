@@ -68,8 +68,6 @@ module.exports = function server(config) {
       res.end()
     });
 
-
-
     var proxy = servers.prox.createProxyServer({ws: true})
     proxy.on('error', function(e){
       console.log(e.Error)
@@ -102,6 +100,7 @@ module.exports = function server(config) {
           proxy.ws(req, socket, {target: 'http://localhost:'+a})
         }
       })
+      o.http.listen(o.config.ports.http)
     }
 
 
