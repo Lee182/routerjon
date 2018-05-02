@@ -59,4 +59,8 @@ process.on('exit', ()=>{
   server.destroy()
 })
 
+process.on('unhandledRejection', (reason, p)=>{
+  console.log(reason, p)
+})
+
 main()

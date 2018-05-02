@@ -6,6 +6,7 @@
   "production": false,
   "spdy": false,
   "domains": {
-    "localhost": 8090
+    "::": 8080,
+    "localhost": 8080
   }
 }

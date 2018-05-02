@@ -1,11 +1,13 @@
+/* eslint-disable */
 const le_store_certbot = require('le-store-certbot')
 const le_challenge_fs = require('le-challenge-fs')
 const greenlock_express = require('greenlock-express')
 const redirect_https = require('redirect-https')
+const express = require('express')
 const util = require('util')
 const servers = {
   http: require('http'),
-  https: require('http'),
+  https: require('https'),
   spdy: require('http2'),
   prox: require('http-proxy')
 }
@@ -19,8 +21,7 @@ module.exports = function server(config) {
   function init() {
     function approveDomains(opts, certs, cb) {
       // TODO - verify domain
-      console.log('approveDomains', opts, certs)
-      if (!o.config.domains[opts.domain]) {
+      if (!o.config.router[opts.domain]) {
         cb(true)
         return
       }
@@ -30,7 +31,6 @@ module.exports = function server(config) {
         opts.email = o.config.email
         opts.agreeTos = true
       }
-      console.log('approveDomains2', opts, certs)
       cb(null, { options: opts, certs: certs })
     }
 
@@ -58,12 +58,16 @@ module.exports = function server(config) {
       approveDomains: approveDomains
     })
 
-    // handles acme-challenge and redirects to https
-    o.http = servers['http'].createServer()
-    o.http.on('request',
-      lex.middleware( redirect_https({port: o.config.ports.https}) )
-    )
-    o.http.listen(o.config.ports.http)
+    const app = express();
+    app.use(function (req, res) {
+      var a = o.config.router[req.headers.host]
+      if (a !== undefined) {
+        proxy.web(req, res, {target: 'http://localhost:'+a})
+        return
+      }
+      res.end()
+    });
+
 
 
     var proxy = servers.prox.createProxyServer({ws: true})
@@ -71,28 +75,36 @@ module.exports = function server(config) {
       console.log(e.Error)
     })
 
+    if (o.config.ports.https) {
+      // handles acme-challenge and redirects to https
+      o.http = servers['http'].createServer()
+      o.http.on('request',
+        lex.middleware( redirect_https({port: o.config.ports.https}) )
+      )
+      o.http.listen(o.config.ports.http)
 
-    o.https = servers[o.config.spdy ? 'spdy' : 'https'].createServer(lex.httpsOptions,
-    lex.middleware(function (req, res) {
-      var a = o.config.router[req.headers.host]
-      console.log(a)
-      if (a !== undefined) {
-        return proxy.web(req, res, {target: 'http://localhost:'+a})
-      }
-      res.end()
-    }))
+      o.https = servers[o.config.spdy ? 'spdy' : 'https'].createServer(lex.httpsOptions, lex.middleware(app))
+      o.https.on('upgrade', function(req, socket, head) {
+        var a = o.config.router[req.headers.host]
+        if (a !== undefined) {
+          proxy.ws(req, socket, {target: 'http://localhost:'+a})
+        }
+      })
+  
+      o.https.listen(o.config.ports.https, function() {
+        console.log("letsencypt listening at", this.address())
+      })
+    } else {
+      o.http = servers['http'].createServer(app)
+      o.http.on('upgrade', function(req, socket, head) {
+        var a = o.config.router[req.headers.host]
+        if (a !== undefined) {
+          proxy.ws(req, socket, {target: 'http://localhost:'+a})
+        }
+      })
+    }
 
-    o.https.on('upgrade', function(req, socket, head) {
-      var a = o.config.router[req.headers.host]
-      if (a !== undefined) {
-        proxy.ws(req, socket, {target: 'http://localhost:'+a})
-      }
-    })
 
-    o.https.listen(o.config.ports.https, function() {
-      // console.log("Listening for ACME tls-sni-01 challenges and serve app on", this.address())
-      console.log("letsencypt listening at", this.address())
-    })
   }
 
   function update(config) {
@@ -100,10 +112,14 @@ module.exports = function server(config) {
   }
 
   function destroy() {
-    return Promise.all([
-      util.promisify(o.http.close)(),
-      util.promisify(o.https.close)()
-    ])
+    try {
+      return Promise.all([
+        util.promisify(o.http.close)(),
+        util.promisify(o.https.close)()
+      ])
+    } catch (err) {
+      return
+    }
   }
 
   o.init = init
