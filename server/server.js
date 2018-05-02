@@ -100,7 +100,9 @@ module.exports = function server(config) {
           proxy.ws(req, socket, {target: 'http://localhost:'+a})
         }
       })
-      o.http.listen(o.config.ports.http)
+      o.http.listen(o.config.ports.http, function(){
+        console.log('http only oh dear')
+      })
     }
 
 
