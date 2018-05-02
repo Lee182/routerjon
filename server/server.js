@@ -2,29 +2,35 @@ const le_store_certbot = require('le-store-certbot')
 const le_challenge_fs = require('le-challenge-fs')
 const greenlock_express = require('greenlock-express')
 const redirect_https = require('redirect-https')
+const util = require('util')
 const servers = {
   http: require('http'),
-  https: require('https'),
-  spdy: require('spdy'),
+  https: require('http'),
+  spdy: require('http2'),
   prox: require('http-proxy')
 }
 
 module.exports = function server(config) {
   var o = {
     http: null,
-    https: null
+    https: null,
+    config
   }
   function init() {
     function approveDomains(opts, certs, cb) {
       // TODO - verify domain
-      if (certs) {
-        opts.domains = config.domains
-      }
-      else {
-         opts.email = config.email
-         opts.agreeTos = true
-      }
       console.log('approveDomains', opts, certs)
+      if (!o.config.domains[opts.domain]) {
+        cb(true)
+        return
+      }
+      if (certs) {
+        opts.domains = o.config.domains
+      } else {
+        opts.email = o.config.email
+        opts.agreeTos = true
+      }
+      console.log('approveDomains2', opts, certs)
       cb(null, { options: opts, certs: certs })
     }
 
@@ -43,7 +49,7 @@ module.exports = function server(config) {
       webrootPath: '~/letsencrypt/var/acme-challenges'})
 
     var lex = greenlock_express.create({
-      server: config.production ? 'https://acme-v02.api.letsencrypt.org/directory': 'https://acme-staging-v02.api.letsencrypt.org/directory',
+      server: o.config.production ? 'https://acme-v02.api.letsencrypt.org/directory': 'https://acme-staging-v02.api.letsencrypt.org/directory',
       version: 'draft-11',
       challenges: {
         'draft-11': chal1,
@@ -55,9 +61,9 @@ module.exports = function server(config) {
     // handles acme-challenge and redirects to https
     o.http = servers['http'].createServer()
     o.http.on('request',
-      lex.middleware( redirect_https({port: config.ports.https}) )
+      lex.middleware( redirect_https({port: o.config.ports.https}) )
     )
-    o.http.listen(config.ports.http)
+    o.http.listen(o.config.ports.http)
 
 
     var proxy = servers.prox.createProxyServer({ws: true})
@@ -66,9 +72,10 @@ module.exports = function server(config) {
     })
 
 
-    o.https = servers[config.spdy ? 'spdy' : 'https'].createServer(lex.httpsOptions,
+    o.https = servers[o.config.spdy ? 'spdy' : 'https'].createServer(lex.httpsOptions,
     lex.middleware(function (req, res) {
-      var a = config.router[req.headers.host]
+      var a = o.config.router[req.headers.host]
+      console.log(a)
       if (a !== undefined) {
         return proxy.web(req, res, {target: 'http://localhost:'+a})
       }
@@ -76,24 +83,31 @@ module.exports = function server(config) {
     }))
 
     o.https.on('upgrade', function(req, socket, head) {
-      var a = config.router[req.headers.host]
+      var a = o.config.router[req.headers.host]
       if (a !== undefined) {
         proxy.ws(req, socket, {target: 'http://localhost:'+a})
       }
     })
 
-    o.https.listen(config.ports.https, function() {
+    o.https.listen(o.config.ports.https, function() {
       // console.log("Listening for ACME tls-sni-01 challenges and serve app on", this.address())
       console.log("letsencypt listening at", this.address())
     })
   }
 
+  function update(config) {
+    o.config = config
+  }
+
   function destroy() {
-    o.http.close()
-    o.https.close()
+    return Promise.all([
+      util.promisify(o.http.close)(),
+      util.promisify(o.https.close)()
+    ])
   }
 
   o.init = init
   o.destroy = destroy
+  o.update = update
   return o
 }

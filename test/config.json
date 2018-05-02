@@ -5,11 +5,12 @@
   },
   "production": false,
   "domains": [
+    "localhost",
     "blogjono.com", "*.blogjono.com",
     "opentorah.uk", "*.opentorah.uk"
   ],
   "email": "jono-lee@hotmail.co.uk",
   "router": {
-    "localhost": 9000
+    "localhost": 8080
   }
 }

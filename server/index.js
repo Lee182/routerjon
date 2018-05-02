@@ -6,8 +6,6 @@ const _ = require('lodash')
 const watch = require('node-watch')
 const Server = require('./server.js')
 
-var default_config = null
-var config = null
 var server = null
 
 // if (process.argv.length === 2) {
@@ -15,47 +13,50 @@ var server = null
 //   console.log('$ routerjon ./config.json')
 // }
 const config_path = process.argv[2] || './config.json'
-const config_update = function(c) {
-  c = _.merge(default_config, c)
-  if (config !== null) {
-    var http_port_change = c.ports && c.ports.http !== config.ports.http
-    var https_port_change = c.ports && c.ports.https !== config.ports.https
-    var letencrypt_server_change = config.production !== c.production
-    var domains_change = !_.isEqual(config.domains, c.domains)
-
-    var change_should_restart_server = http_port_change || https_port_change || letencrypt_server_change || domains_change
-
-    if (change_should_restart_server && server !== null) {
-      server.destroy()
-    }
+const config_update = async (config, defaultConfig) => {
+  const c = _.merge(defaultConfig, config)
+  let http_port_change, https_port_change, letencrypt_server_change, domains_change
+  if (server && server.config) {
+    http_port_change = c.ports && c.ports.http !== server.config.ports.http
+    https_port_change = c.ports && c.ports.https !== server.config.ports.https
+    letencrypt_server_change = server.config.production !== c.production
+    domains_change = !_.isEqual(server.config.domains, c.domains)
   }
-  config = c
-  server = Server(config)
-  server.init()
+  
+  const change_should_restart_server = http_port_change || https_port_change || letencrypt_server_change
+  
+  if (change_should_restart_server && server !== null) {
+    await server.destroy()
+  }
+  if (server) {
+    server.update(c)
+  }
+  if (change_should_restart_server || server === null) {
+    server = Server(config)
+    server.init()
+  }
 }
 
 
 // read config and apply defaults.
 // config_update causes server to start
-Promise.all([
-  fs_readJSON(__dirname+'/default_config.json'),
-  fs_readJSON(config_path)
-])
-.then(function([a,b]){
-  default_config = a
-  return b
-})
-.then(config_update)
-.then(function(){
+const main = async () => {
+  const [configDefault, config] = await Promise.all([
+    fs_readJSON(__dirname +'/default_config.json'),
+    fs_readJSON(config_path)
+  ])
+  await config_update(config, configDefault)
+}
 
-})
-.catch(function(err){
-  console.log(err)
-  process.exit()
+watch(config_path, async (evt, name)=>{
+  if (evt === 'update') {
+    await main()
+  }
 })
 
-
-watch(config_path, function(evt, name){
-  if (evt !== 'update') {return}
-  fs_readJSON(config_path).then(config_update)
+process.on('exit', ()=>{
+  if (!server) { return }
+  server.destroy()
 })
+
+main()

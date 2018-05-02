@@ -6,6 +6,6 @@
   "production": false,
   "spdy": false,
   "domains": {
-    "localhost:3000": 9000
+    "localhost": 8090
   }
 }
