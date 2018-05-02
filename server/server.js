@@ -43,7 +43,7 @@ module.exports = function server(config) {
       webrootPath: '~/letsencrypt/var/acme-challenges'})
 
     var lex = greenlock_express.create({
-      server: config.production ? 'https://acme-v01.api.letsencrypt.org/directory': 'staging',
+      server: config.production ? 'https://acme-v02.api.letsencrypt.org/directory': 'https://acme-staging-v02.api.letsencrypt.org/directory',
       challenges: {
         'http-01': chal1,
       },
