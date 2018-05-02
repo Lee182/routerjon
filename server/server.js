@@ -44,8 +44,9 @@ module.exports = function server(config) {
 
     var lex = greenlock_express.create({
       server: config.production ? 'https://acme-v02.api.letsencrypt.org/directory': 'https://acme-staging-v02.api.letsencrypt.org/directory',
+      version: 'draft-11',
       challenges: {
-        'http-01': chal1,
+        'draft-11': chal1,
       },
       store: leStore,
       approveDomains: approveDomains
