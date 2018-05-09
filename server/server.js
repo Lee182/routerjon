@@ -43,7 +43,7 @@ module.exports = function server(config) {
       workDir: '~/letsencrypt/var/lib',
       logsDir: '~/letsencrypt/var/log',
       webrootPath: '~/letsencrypt/srv/www/:hostname/.well-known/acme-challenge',
-      debug: false
+      debug: o.config.debug
     })
     var chal1 =  le_challenge_fs.create({
       webrootPath: '~/letsencrypt/var/acme-challenges'})
@@ -61,8 +61,22 @@ module.exports = function server(config) {
     const app = express();
     app.use(function (req, res) {
       var a = o.config.router[req.headers.host]
-      if (a !== undefined) {
+      if (o.config.debug) {console.log('https', req.headers.host)}
+      if  (!a) {
+        console.log('here')
+        req.destroy()
+        return
+      }
+      if (!isNaN(a) || (!a.http && !isNaN(a.port) && !a.redirect) ) {
         proxy.web(req, res, {target: 'http://localhost:'+a})
+        return
+      }
+      if (a.redirect === true) {
+        res.redirect(a.redirectUrl)
+        return
+      }
+      if (a.http === true) {
+        res.redirect(`http://${req.headers.host}${req.url}`)
         return
       }
       res.end()
@@ -73,39 +87,53 @@ module.exports = function server(config) {
       console.log(e.Error)
     })
 
-    if (o.config.ports.https) {
-      // handles acme-challenge and redirects to https
-      o.http = servers['http'].createServer()
-      o.http.on('request',
-        lex.middleware( redirect_https({port: o.config.ports.https}) )
-      )
-      o.http.listen(o.config.ports.http)
-
-      o.https = servers[o.config.spdy ? 'spdy' : 'https'].createServer(lex.httpsOptions, lex.middleware(app))
-      o.https.on('upgrade', function(req, socket, head) {
-        var a = o.config.router[req.headers.host]
-        if (a !== undefined) {
-          proxy.ws(req, socket, {target: 'http://localhost:'+a})
-        }
-      })
-  
-      o.https.listen(o.config.ports.https, function() {
-        console.log("letsencypt listening at", this.address())
-      })
-    } else {
-      o.http = servers['http'].createServer(app)
-      o.http.on('upgrade', function(req, socket, head) {
-        var a = o.config.router[req.headers.host]
-        if (a !== undefined) {
-          proxy.ws(req, socket, {target: 'http://localhost:'+a})
-        }
-      })
-      o.http.listen(o.config.ports.http, function(){
-        console.log('http only oh dear')
-      })
-    }
-
-
+    // handles acme-challenge and redirects to https
+    o.http = servers['http'].createServer()
+    o.http.on('request', (req, res)=>{
+      const a = o.config.router[req.headers.host]
+      if (o.config.debug) {console.log('http', req.headers.host)}
+      if  (!a) {
+        req.destroy()
+        return
+      }
+      if (!isNaN(a) || (!a.http && !isNaN(a.port) && !a.redirect) ) {
+        redirect_https({ port: o.config.ports.https }).apply(this, [req, res])
+        return
+      }
+      if (a.http === true) {
+        proxy.web(req, res, {target: 'http://localhost:'+a.port})
+        return
+      }
+      if (a.redirect) {
+        res.writeHead(302, {'Location':  a.redirectUrl + req.url});
+        res.end()
+      }
+      req.destroy()
+    })
+    o.http.on('upgrade', function(req, socket, head) {
+      if (o.config.debug) {console.log('http upgrade', req.headers.host)}
+      var a = o.config.router[req.headers.host]
+      if (typeof a === 'object' && a.http) {
+        proxy.ws(req, socket, {target: 'http://localhost:'+a})
+        return
+      }
+      req.destroy()
+      return
+    })
+    
+    o.https = servers[o.config.spdy ? 'spdy' : 'https'].createServer(lex.httpsOptions, lex.middleware(app))
+    o.https.on('upgrade', function(req, socket, head) {
+      var a = o.config.router[req.headers.host]
+      if (o.config.debug) {console.log('https upgrade', req.headers.host)}
+      if (a !== undefined) {
+        proxy.ws(req, socket, {target: 'http://localhost:'+a})
+      }
+    })
+    
+    o.http.listen(o.config.ports.http)
+    o.https.listen(o.config.ports.https, function() {
+      console.log("letsencypt listening at", this.address())
+    })
   }
 
   function update(config) {
