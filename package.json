@@ -1,6 +1,6 @@
 {
   "name": "routerjon",
-  "version": "0.0.16",
+  "version": "0.0.18",
   "description": "An nodejs expressjs router, hopefully simple to run with npm scripts. Uses letsencrypt for https encryption.",
   "main": "server/index.js",
   "bin": {

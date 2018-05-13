@@ -12,7 +12,7 @@ var server = null
 //   console.log('please specify config file as first argument like')
 //   console.log('$ routerjon ./config.json')
 // }
-const config_path = process.argv[2] || './config.json'
+const config_path = process.argv[process.argv.length-1] || './config.json'
 const config_update = async (config, defaultConfig) => {
   const c = _.merge(defaultConfig, config)
   let http_port_change, https_port_change, letencrypt_server_change, domains_change

@@ -11,9 +11,12 @@
   ],
   "email": "jono-lee@hotmail.co.uk",
   "router": {
-    "localhost": 8080,
-    "localhost:3000": {
+    "localhost": {
       "http": false,
+      "port": 8080,
+      "wildcard": 1
+    },
+    "localhost:3000": {
       "port": 8080
     }
   },
