@@ -2,7 +2,7 @@ dependencies:
   bluebird: 3.5.1
   express: 4.16.3
   greenlock: 2.2.11
-  greenlock-express: 2.1.1
+  greenlock-express: 2.1.4
   http-proxy: 1.17.0
   le-challenge-fs: 2.0.8
   le-store-certbot: 2.0.5
@@ -23,15 +23,6 @@ packages:
       node: '>= 0.6'
     resolution:
       integrity: sha1-63d99gEXI6OxTopywIBcjoZ0a9I=
-  /acme-v2/1.0.5:
-    dependencies:
-      request: 2.85.0
-      rsa-compat: 1.3.2
-    dev: false
-    optionalDependencies:
-      bluebird: 3.5.1
-    resolution:
-      integrity: sha1-euwzTsszsaMjRKbdJSDlq3Br7+E=
   /acme-v2/1.0.6:
     dependencies:
       request: 2.85.0
@@ -527,17 +518,16 @@ packages:
       node: '>=0.4.0'
     resolution:
       integrity: sha1-Dovf5NHduIVNZOBOp8AOKgJuVlg=
-  /greenlock-express/2.1.1:
+  /greenlock-express/2.1.4:
     dependencies:
-      greenlock: 2.2.7
+      greenlock: 2.2.11
       le-challenge-fs: 2.0.8
       le-sni-auto: 2.1.5
-      le-store-certbot: 2.0.5
-      localhost.daplie.me-certificates: 1.3.5
+      le-store-certbot: 2.1.0
       redirect-https: 1.1.5
     dev: false
     resolution:
-      integrity: sha512-Wz9zfd+P1I3Sp3b/GiOGhIz+svKjDwECImft8zywBSUWdqbXfqJ1p0r/sSLGD7ngIGPqXDXRlYXrT6LzDj9cYA==
+      integrity: sha512-0/+mbhdk60XBBfMMZnV0Pxx0UkSpQZw1r1Gb5Svu7yoJAE/Jk0qnieTw7fOYimthSMsOHuIBGSDl0d9RIo87cw==
   /greenlock/2.2.11:
     dependencies:
       acme-v2: 1.0.6
@@ -559,26 +549,6 @@ packages:
       bluebird: 3.5.1
     resolution:
       integrity: sha512-o4fFnyQ12DIePufakzXNI0W3RrYBAvZ10a4K8Mhpk7EPPUHnkEvNRnkuluK+GfIX2hUWA6eTajKdbXKeaxZPeg==
-  /greenlock/2.2.7:
-    dependencies:
-      acme-v2: 1.0.5
-      asn1js: 1.2.12
-      certpem: 1.0.1
-      homedir: 0.6.0
-      le-acme-core: 2.1.2
-      le-challenge-fs: 2.0.8
-      le-challenge-sni: 2.0.1
-      le-sni-auto: 2.1.5
-      le-store-certbot: 2.0.5
-      localhost.daplie.me-certificates: 1.3.5
-      node.extend: 1.1.6
-      pkijs: 1.3.33
-      rsa-compat: 1.3.2
-    dev: false
-    optionalDependencies:
-      bluebird: 3.5.1
-    resolution:
-      integrity: sha1-il1LfDOU7pIRyhICjMj6MF24CrU=
   /handle-thing/1.2.5:
     dev: false
     resolution:
@@ -793,13 +763,6 @@ packages:
       '0': node >=0.6.0
     resolution:
       integrity: sha1-MT5mvB5cwG5Di8G3SZwuXFastqI=
-  /le-acme-core/2.1.2:
-    dependencies:
-      request: 2.85.0
-      rsa-compat: 1.3.2
-    dev: false
-    resolution:
-      integrity: sha512-JckI1DwnOhex1xDgDuNrHRZNuKzjiR4m82nxwDxIFJ8gcnEiqGXwIC+G9xsx5qFcHUkWA1mQRrGIbOmNXFPMLw==
   /le-acme-core/2.1.3:
     dependencies:
       request: 2.85.0
@@ -862,11 +825,6 @@ packages:
       node: '>=4'
     resolution:
       integrity: sha1-L19Fq5HjMhYjT9U62rZo607AmTs=
-  /localhost.daplie.me-certificates/1.3.5:
-    deprecated: this package has been deprecated
-    dev: false
-    resolution:
-      integrity: sha1-GjqH5PlX8mn2LP7mCmNpe9JVOpo=
   /lodash/4.17.10:
     dev: false
     resolution:
@@ -1546,7 +1504,7 @@ specifiers:
   bluebird: ^3.5.1
   express: ^4.16.3
   greenlock: ^2.2.11
-  greenlock-express: ^2.1.1
+  greenlock-express: ^2.1.4
   http-proxy: ^1.17.0
   le-challenge-fs: ^2.0.8
   le-store-certbot: ^2.0.5
