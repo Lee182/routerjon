@@ -1,6 +1,7 @@
 dependencies:
   bluebird: 3.5.1
   express: 4.16.3
+  greenlock: 2.2.11
   greenlock-express: 2.1.1
   http-proxy: 1.17.0
   le-challenge-fs: 2.0.8
@@ -31,6 +32,15 @@ packages:
       bluebird: 3.5.1
     resolution:
       integrity: sha1-euwzTsszsaMjRKbdJSDlq3Br7+E=
+  /acme-v2/1.0.6:
+    dependencies:
+      request: 2.85.0
+      rsa-compat: 1.3.2
+    dev: false
+    optionalDependencies:
+      bluebird: 3.5.1
+    resolution:
+      integrity: sha512-r8RZyMrAYTkgos7BOD00pU4217qjC41eUfhiTPSAmumeFBlWBmDbBvsW/NOET47VcZA3oKvaXOFPGQaC5/Vkrg==
   /ajv/5.5.2:
     dependencies:
       co: 4.6.0
@@ -47,6 +57,10 @@ packages:
       node: '>=4'
     resolution:
       integrity: sha512-VT0ZI6kZRdTh8YyJw3SMbYm/u+NqfsAxEpWO0Pf9sq8/e94WxxOpPKx9FR1FlyCtOVDNOQ+8ntlqFxiRc+r5qA==
+  /any-promise/1.3.0:
+    dev: false
+    resolution:
+      integrity: sha1-q8av7tzqUugJzcA3au0845Y10X8=
   /array-filter/0.0.1:
     dev: true
     resolution:
@@ -490,6 +504,14 @@ packages:
     dev: true
     resolution:
       integrity: sha1-g8YK/Fi5xWmXAH7Rp2izqzA6RP4=
+  /fs-symlink/1.2.1:
+    dependencies:
+      mkdirp: 0.5.1
+      mkdirp-then: 1.2.0
+      mz: 2.7.0
+    dev: false
+    resolution:
+      integrity: sha1-G+uoPqncqBI2AOPwuaUbGGQLvEA=
   /function-bind/1.1.1:
     dev: true
     resolution:
@@ -516,6 +538,27 @@ packages:
     dev: false
     resolution:
       integrity: sha512-Wz9zfd+P1I3Sp3b/GiOGhIz+svKjDwECImft8zywBSUWdqbXfqJ1p0r/sSLGD7ngIGPqXDXRlYXrT6LzDj9cYA==
+  /greenlock/2.2.11:
+    dependencies:
+      acme-v2: 1.0.6
+      asn1js: 1.2.12
+      certpem: 1.0.1
+      homedir: 0.6.0
+      le-acme-core: 2.1.3
+      le-challenge-fs: 2.0.8
+      le-challenge-sni: 2.0.1
+      le-sni-auto: 2.1.5
+      le-store-certbot: 2.1.0
+      node.extend: 1.1.6
+      pkijs: 1.3.33
+      rsa-compat: 1.3.2
+    dev: false
+    engines:
+      node: '>=4.5'
+    optionalDependencies:
+      bluebird: 3.5.1
+    resolution:
+      integrity: sha512-o4fFnyQ12DIePufakzXNI0W3RrYBAvZ10a4K8Mhpk7EPPUHnkEvNRnkuluK+GfIX2hUWA6eTajKdbXKeaxZPeg==
   /greenlock/2.2.7:
     dependencies:
       acme-v2: 1.0.5
@@ -757,6 +800,13 @@ packages:
     dev: false
     resolution:
       integrity: sha512-JckI1DwnOhex1xDgDuNrHRZNuKzjiR4m82nxwDxIFJ8gcnEiqGXwIC+G9xsx5qFcHUkWA1mQRrGIbOmNXFPMLw==
+  /le-acme-core/2.1.3:
+    dependencies:
+      request: 2.85.0
+      rsa-compat: 1.3.2
+    dev: false
+    resolution:
+      integrity: sha512-GFl4rfhn8XIrw5dJDJe/xcGcTkYrluc3kcxIhpa6TXrkOlOCrYlv+s1wqoDM6cn2ainxg+PM/6F/XXMxnn9WTQ==
   /le-challenge-fs/2.0.8:
     dependencies:
       mkdirp: 0.5.1
@@ -784,6 +834,16 @@ packages:
     dev: false
     resolution:
       integrity: sha1-tT/PwXe98A6oiBLQ3mc6DeD+NJE=
+  /le-store-certbot/2.1.0:
+    dependencies:
+      bluebird: 3.5.1
+      fs-symlink: 1.2.1
+      mkdirp: 0.5.1
+      pyconf: 1.1.5
+      safe-replace: 1.0.2
+    dev: false
+    resolution:
+      integrity: sha512-34LwXPm/SNGqbfa3ttIHtCt+NNLGohm76vBbWx5WJgSeapnFcJHJl0G0eeGY8Ooa8vjj6Ude9uVArKp3Jfjpag==
   /le-tls-sni/0.1.4:
     dependencies:
       node-forge: 0.6.49
@@ -874,6 +934,13 @@ packages:
     dev: false
     resolution:
       integrity: sha1-hX/Kv8M5fSYluCKCYuhqp6ARsF0=
+  /mkdirp-then/1.2.0:
+    dependencies:
+      any-promise: 1.3.0
+      mkdirp: 0.5.1
+    dev: false
+    resolution:
+      integrity: sha1-pJLIecpNhz9e5FAI+PVf0BUN48U=
   /mkdirp/0.5.1:
     dependencies:
       minimist: 0.0.8
@@ -884,6 +951,14 @@ packages:
     dev: false
     resolution:
       integrity: sha1-VgiurfwAvmwpAd9fmGF4jeDVl8g=
+  /mz/2.7.0:
+    dependencies:
+      any-promise: 1.3.0
+      object-assign: 4.1.1
+      thenify-all: 1.6.0
+    dev: false
+    resolution:
+      integrity: sha512-z81GNO7nnYMEhrGh9LeymoE4+Yr0Wn5McHIZMK5cfQCl+NDX08sCZgUc9/6MHni9IWuFLm1Z3HTCXu2z9fN62Q==
   /nan/2.10.0:
     dev: false
     optional: true
@@ -939,6 +1014,12 @@ packages:
   /oauth-sign/0.8.2:
     resolution:
       integrity: sha1-Rqarfwrq2N6unsBWV4C31O/rnUM=
+  /object-assign/4.1.1:
+    dev: false
+    engines:
+      node: '>=0.10.0'
+    resolution:
+      integrity: sha1-IQmtx5ZYh8/AXLvUQsrIv7s2CGM=
   /object-keys/1.0.11:
     dev: true
     engines:
@@ -1037,11 +1118,23 @@ packages:
     dev: false
     resolution:
       integrity: sha1-YaeqKZ/27le4xoetNVpV0ueoams=
+  /pyconf/1.1.5:
+    dependencies:
+      safe-replace: 1.0.2
+    dev: false
+    resolution:
+      integrity: sha512-zXEg0oUJ4mY6azqVvRy6rePTIHZGhDQG3z9PVkE60uUabS9uILiIkHobU2Jzcs3tBltMBqyEATZZezRR/UFjkg==
   /qs/6.5.1:
+    dev: false
     engines:
       node: '>=0.6'
     resolution:
       integrity: sha512-eRzhrN1WSINYCDCbrz796z37LOe3m5tmW7RQf6oBntukAG1nmovJvhnwHHRMAfeoItc1m2Hk02WER2aQ/iqs+A==
+  /qs/6.5.2:
+    engines:
+      node: '>=0.6'
+    resolution:
+      integrity: sha512-N5ZAX4/LxJmF+7wN74pUD6qAh9/wnvdQcjq9TZjevvXzSUo7bfmw91saqMjzGS2xq91/odN2dW/WOl7qQHNDGA==
   /range-parser/1.2.0:
     dev: false
     engines:
@@ -1105,7 +1198,7 @@ packages:
       mime-types: 2.1.18
       oauth-sign: 0.8.2
       performance-now: 2.1.0
-      qs: 6.5.1
+      qs: 6.5.2
       safe-buffer: 5.1.2
       stringstream: 0.0.5
       tough-cookie: 2.3.4
@@ -1335,6 +1428,20 @@ packages:
       node: '>=4'
     resolution:
       integrity: sha512-zjaXglF5nnWpsq470jSv6P9DwPvgLkuapYmfDm3JWOm0vkNTVF2tI4UrN2r6jH1qM/uc/WtxYY1hYoA2dOKj5w==
+  /thenify-all/1.6.0:
+    dependencies:
+      thenify: 3.3.0
+    dev: false
+    engines:
+      node: '>=0.8'
+    resolution:
+      integrity: sha1-GhkY1ALY/D+Y+/I02wvMjMEOlyY=
+  /thenify/3.3.0:
+    dependencies:
+      any-promise: 1.3.0
+    dev: false
+    resolution:
+      integrity: sha1-5p44obq+lpsBCCB5eLn2K4hgSDk=
   /through/2.3.8:
     dev: true
     resolution:
@@ -1438,6 +1545,7 @@ shrinkwrapVersion: 3
 specifiers:
   bluebird: ^3.5.1
   express: ^4.16.3
+  greenlock: ^2.2.11
   greenlock-express: ^2.1.1
   http-proxy: ^1.17.0
   le-challenge-fs: ^2.0.8

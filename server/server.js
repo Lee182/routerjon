@@ -1,7 +1,6 @@
 /* eslint-disable */
 const le_store_certbot = require('le-store-certbot')
-const le_challenge_fs = require('le-challenge-fs')
-const greenlock_express = require('greenlock-express')
+const Greenlock = require('greenlock-express');
 const redirect_https = require('redirect-https')
 const express = require('express')
 const util = require('util')
@@ -12,6 +11,9 @@ const servers = {
   prox: require('http-proxy')
 }
 
+var chal1 =  le_challenge_fs.create({
+  webrootPath: '~/letsencrypt/var/acme-challenges'})
+
 module.exports = function server(config) {
   var o = {
     http: null,
@@ -21,6 +23,7 @@ module.exports = function server(config) {
   function init() {
     function approveDomains(opts, certs, cb) {
       // TODO - verify domain
+      console.log('opts.....')
       if (!o.config.router[opts.domain]) {
         cb(true)
         return
@@ -45,17 +48,15 @@ module.exports = function server(config) {
       webrootPath: '~/letsencrypt/srv/www/:hostname/.well-known/acme-challenge',
       debug: o.config.debug
     })
-    var chal1 =  le_challenge_fs.create({
-      webrootPath: '~/letsencrypt/var/acme-challenges'})
 
-    var lex = greenlock_express.create({
+    const greenlock = Greenlock.create({
       server: o.config.production ? 'https://acme-v02.api.letsencrypt.org/directory': 'https://acme-staging-v02.api.letsencrypt.org/directory',
       version: 'draft-11',
       challenges: {
         'draft-11': chal1,
       },
       store: leStore,
-      approveDomains: approveDomains
+      approveDomains
     })
 
     const app = express();
@@ -63,7 +64,6 @@ module.exports = function server(config) {
       var a = o.config.router[req.headers.host]
       if (o.config.debug) {console.log('https', req.headers.host)}
       if  (!a) {
-        console.log('here')
         req.destroy()
         return
       }
@@ -88,8 +88,8 @@ module.exports = function server(config) {
     })
 
     // handles acme-challenge and redirects to https
-    o.http = servers['http'].createServer()
-    o.http.on('request', (req, res)=>{
+    const redir = greenlock.middleware(redirect_https({ port: o.config.ports.https }))
+    o.http = servers['http'].createServer(function (req, res) {
       const a = o.config.router[req.headers.host]
       if (o.config.debug) {console.log('http', req.headers.host)}
       if  (!a) {
@@ -97,7 +97,7 @@ module.exports = function server(config) {
         return
       }
       if (!isNaN(a) || (!a.http && !isNaN(a.port) && !a.redirect) ) {
-        redirect_https({ port: o.config.ports.https }).apply(this, [req, res])
+        redir.apply(this, arguments)
         return
       }
       if (a.http === true) {
@@ -107,6 +107,7 @@ module.exports = function server(config) {
       if (a.redirect) {
         res.writeHead(302, {'Location':  a.redirectUrl + req.url});
         res.end()
+        return
       }
       req.destroy()
     })
@@ -121,7 +122,7 @@ module.exports = function server(config) {
       return
     })
     
-    o.https = servers[o.config.spdy ? 'spdy' : 'https'].createServer(lex.httpsOptions, lex.middleware(app))
+    o.https = servers[o.config.spdy ? 'spdy' : 'https'].createServer(greenlock.httpsOptions, greenlock.middleware(app))
     o.https.on('upgrade', function(req, socket, head) {
       var a = o.config.router[req.headers.host]
       if (o.config.debug) {console.log('https upgrade', req.headers.host)}
