@@ -1,0 +1,50 @@
+{
+	"ports": {
+		"http": 80,
+		"https": 443
+	},
+	"debug": true,
+	"spdy": false,
+	"production": true,
+	"email": "jono-lee@hotmail.co.uk",
+	"router": {
+		"blogjono.com": {
+			".": {
+				"port": 9000,
+				"http": false
+			},
+			"www.": {
+				"redirect": true,
+				"redirectUrl": "https://blogjono.com"
+			},
+			"fcc-pin.": 9001,
+			"booktrade.": 9003,
+			"learning-react.": 9004,
+			"url.": 9005,
+			"vote.": 9006,
+			"twnight.": 9007,
+			"stocks.": 9008,
+			"pretty.": 9700,
+			"datetable.": 20185,
+			"git.": 5911
+		},
+		"opentoarh.uk": {
+			".": 9002
+		},
+		"highstrung.uk": {
+			".": 2018,
+			"www.": {
+				"redirect": true,
+				"http": true,
+				"redirectUrl": "https://highstrung.uk"
+			},
+			"email": 8080
+		},
+		"178.79.163.144": {
+			".": {
+				"port": 2018,
+				"http": true
+			}
+		}
+	}
+}

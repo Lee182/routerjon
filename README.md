@@ -30,10 +30,12 @@ for example the config running on my deployment at blogjono.com is
   ],
   "email": "jono-lee@hotmail.co.uk",
   "router": { // these are servers already running on the machine
-    "blogjono.com": 9000,
-    "fcc-pin.blogjono.com": 9001,
-    "opentorah.uk": 9002,
-    "booktrade.blogjono.com": 9003
+    "blogjono.com": {
+      ".": 9000,
+      "fcc-pin": 9001,
+      "booktrade": 9003
+    },
+    "opentorah.uk": 9002
   }
 }
 ```

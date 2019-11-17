@@ -31,15 +31,11 @@ module.exports = function server(config) {
 				find(options) {
 					const servername = options.servername // www.example.com
 					const wildname = options.wildname // *.example.com
-					console.log(wildname)
-					if (!o.config.router[wildname]) {
+					console.log(servername)
+					if (!o.config.router[servername]) {
 						return Promise.reject()
 					}
-					return Promise.reject()
-					return {
-						subject: servername,
-						altnames
-					}
+					return Promise.resolve(options)
 				}
 			}
 		}

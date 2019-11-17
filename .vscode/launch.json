@@ -10,7 +10,7 @@
       "name": "Launch Program",
       "program": "${workspaceFolder}/server/index.js",
       "args": [
-        "${workspaceFolder}/test/config.json"
+        "${workspaceFolder}/example/blogjono.json"
       ]
     }
   ]
