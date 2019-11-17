@@ -1,6 +1,6 @@
 dependencies:
+  '@root/greenlock': 3.1.5
   express: 4.17.1
-  greenlock: 3.1.5
   greenlock-express: 3.1.1
   http-proxy: 1.18.0
   le-challenge-fs: 2.0.9
@@ -541,23 +541,6 @@ packages:
     dev: false
     resolution:
       integrity: sha512-92ejLB4DyV4qv/2b6VLGF2nKfYQeIfg3o+e/1cIoYLjlIaUFdbBXkzLTRozFlHsQPZt2ALi5qYrpC9IwH7GK8A==
-  /greenlock/3.1.5:
-    dependencies:
-      '@greenlock/manager': 3.0.0
-      '@root/acme': 3.0.8
-      '@root/csr': 0.8.1
-      '@root/greenlock': 3.1.5
-      '@root/keypairs': 0.9.0
-      '@root/mkdirp': 1.0.0
-      '@root/request': 1.4.2
-      acme-http-01-standalone: 3.0.5
-      cert-info: 1.5.1
-      greenlock-manager-fs: 3.0.5
-      greenlock-store-fs: 3.2.2
-      safe-replace: 1.1.0
-    dev: false
-    resolution:
-      integrity: sha512-qYRJ5s7wzlgocmu5bNR9U0lLzO7PZxkYar1nInslv1qpyH5oirGj7e4bIdYKFwFJcdRvOWjCsgfRXDxBIFE3rw==
   /handle-thing/2.0.0:
     dev: false
     resolution:
@@ -1407,8 +1390,8 @@ packages:
     resolution:
       integrity: sha512-HxJdYWq1MTIQbJ3nw0cqssHoTNU267KlrDuGZ1WYlxDStUtKUhOaJmh112/TZmHxxUfuJqPXSOm7tDyas0OSIQ==
 specifiers:
+  '@root/greenlock': ^3.1.5
   express: ^4.17.1
-  greenlock: ^3.1.5
   greenlock-express: ^3.1.1
   http-proxy: ^1.18.0
   le-challenge-fs: ^2.0.9
