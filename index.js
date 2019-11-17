@@ -2,6 +2,9 @@
 const cjson = require('cjson')
 const le_store_certbot = require('le-store-certbot')
 const GreenlockExpress = require('greenlock-express')
+const Greenlock = require('greenlock')
+const awaity = require('awaity')
+
 const redirect_https = require('redirect-https')
 const express = require('express')
 const util = require('util')
@@ -22,12 +25,25 @@ module.exports = function server(config) {
 		https: null,
 		config
 	}
-	function init() {
+	async function init() {
+		var greenlock = Greenlock.create({
+			// used for the ACME client User-Agent string as per RFC 8555 and RFC 7231
+			packageAgent: pkg.name + '/' + pkg.version,
+			packageRoot: __dirname,
+			maintainerEmail: 'jono-lee@hotmail.co.uk',
+			notify: function(ev, args) {
+				if ('error' === ev || 'warning' === ev) {
+					console.error(ev, args)
+					return
+				}
+				console.info(ev, args)
+			}
+		})
+
 		const getConfig = () => {
 			return {
-				packageAgent: `${pkg.name}/${pkg.version}`,
-				maintainerEmail: o.config.email,
-				packageRoot: __dirname,
+				greenlock,
+				cluster: false,
 				find(options) {
 					const servername = options.servername // www.example.com
 					const wildname = options.wildname // *.example.com
@@ -35,7 +51,10 @@ module.exports = function server(config) {
 					if (!o.config.router[servername]) {
 						return Promise.reject()
 					}
-					return Promise.resolve(options)
+					return Promise.resolve({
+						subject: servername,
+						altnames: [ servername ]
+					})
 				}
 			}
 		}
@@ -108,7 +127,24 @@ module.exports = function server(config) {
 			})
 		}
 
-		GreenlockExpress.init(getConfig).serve(httpsWorker)
+		try {
+			await greenlock.manager.defaults({
+				subscriberEmail: o.config.email,
+				agreeToTerms: true
+			})
+
+			await awaity.props(o.config.router, async (value, key) => {
+				console.log(key, '136')
+				return greenlock.sites.add({
+					subject: key,
+					altnames: [ key ]
+				})
+			})
+
+			GreenlockExpress.init(getConfig).serve(httpsWorker)
+		} catch (err) {
+			console.error(err)
+		}
 	}
 
 	function update(config) {

@@ -1,6 +1,6 @@
 {
 	"name": "routerjon",
-	"version": "0.1.6",
+	"version": "0.1.8",
 	"description": "An nodejs expressjs router, hopefully simple to run with npm scripts. Uses letsencrypt for https encryption.",
 	"main": "server/index.js",
 	"bin": {
@@ -29,8 +29,10 @@
 	"homepage": "https://github.com/Lee182/routerjon#readme",
 	"dependencies": {
 		"@root/greenlock": "^3.1.5",
+		"awaity": "^1.0.0",
 		"cjson": "^0.5.0",
 		"express": "^4.17.1",
+		"greenlock": "^3.1.5",
 		"greenlock-express": "^3.1.1",
 		"http-proxy": "^1.18.0",
 		"le-challenge-fs": "^2.0.9",

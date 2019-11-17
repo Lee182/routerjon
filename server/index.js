@@ -93,7 +93,6 @@ const parseConfigTreeToFlat = function(config) {
 	}
 	_.reduce(config.router, mapObject, '')
 	config.router = oRouter
-	debugger
 	return config
 }
 
