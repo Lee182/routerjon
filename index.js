@@ -27,10 +27,11 @@ module.exports = function server(config) {
 	}
 	async function init() {
 		var greenlock = Greenlock.create({
-			// used for the ACME client User-Agent string as per RFC 8555 and RFC 7231
 			packageAgent: pkg.name + '/' + pkg.version,
 			packageRoot: __dirname,
 			maintainerEmail: 'jono-lee@hotmail.co.uk',
+			termsOfService: true,
+			agreeToTerms: true,
 			notify: function(ev, args) {
 				if ('error' === ev || 'warning' === ev) {
 					console.error(ev, args)
@@ -44,6 +45,8 @@ module.exports = function server(config) {
 			return {
 				greenlock,
 				cluster: false,
+				termsOfService: true,
+				agreeToTerms: true,
 				find(options) {
 					const servername = options.servername // www.example.com
 					const wildname = options.wildname // *.example.com
