@@ -133,11 +133,11 @@ module.exports = function server(config) {
 				agreeToTerms: true
 			})
 
-			await awaity.props(o.config.router, async (value, key) => {
-				console.log(key, '136')
+			const aSites = Object.keys(o.config.router)
+			await awaity.each(aSites, async (sSite) => {
 				return greenlock.sites.add({
-					subject: key,
-					altnames: [ key ]
+					subject: sSite,
+					altnames: [ sSite ]
 				})
 			})
 
