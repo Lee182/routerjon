@@ -1,5 +1,5 @@
 /* eslint-disable */
-const pkg = require('../package.json')
+const cjson = require('cjson')
 const le_store_certbot = require('le-store-certbot')
 const GreenlockExpress = require('greenlock-express')
 const redirect_https = require('redirect-https')
@@ -7,6 +7,8 @@ const express = require('express')
 const util = require('util')
 const os = require('os')
 const path = require('path')
+const pkg = cjson.load(path.resolve(__dirname, 'package.json'))
+console.log(pkg.name, pkg.version)
 const servers = {
 	http: require('http'),
 	https: require('https'),
