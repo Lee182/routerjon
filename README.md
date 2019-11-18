@@ -24,10 +24,6 @@ for example the config running on my deployment at blogjono.com is
     "https": 443
   },
   "production": true, // server for letsencrypt, note production has rate limit
-  "domains": [
-    "blogjono.com", "*.blogjono.com",
-    "opentorah.uk", "*.opentorah.uk"
-  ],
   "email": "jono-lee@hotmail.co.uk",
   "router": { // these are servers already running on the machine
     "blogjono.com": {
