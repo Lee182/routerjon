@@ -86,6 +86,17 @@ you may need sudo or root privallages to run the command with the server ports 8
 ## reload changes
 by default when you edit the config with valid json and save the file, changes will be automatically reloaded (thanks to node-watch). This makes it easy to vim into and fiddle with the routers port numbers
 
+## run into challenges with letsencrypt
+this module uses greenlock v3 to manage certificates which stores the files in ~/.config/greenlock. sometimes you may have to delete this folder if you run into errors in the logs.
+
+
+## suggestions ip-tables
+so that the nodejs app does not run as root it is suggested to install and use libcap2
+```sh
+sudo pacman -Syu libcap
+sudo setcap cap_net_bind_service=+ep `readlink -f \`which node\``
+```
+
 ## details
 the script will store your certificates in the ```~/letsencrypt``` directory.
 

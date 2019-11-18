@@ -1,49 +1,55 @@
 {
-	"name": "routerjon",
-	"version": "0.1.10",
-	"description": "An nodejs expressjs router, hopefully simple to run with npm scripts. Uses letsencrypt for https encryption.",
-	"main": "server/index.js",
-	"bin": {
-		"routerjon": "server/index.js"
-	},
-	"scripts": {
-		"example": "routerjon example/config.json",
-		"test:wait": "node test/wait.js 2000",
-		"test:router": "routerjon test/config.json",
-		"test:server": "node test/http_server.js",
-		"test:ok": "node test/http_client.js",
-		"test:start": "npm-run-all -p test:router test:server",
-		"test:end": "npm-run-all -s test:wait test:ok",
-		"test": "npm-run-all -p test:start test:end"
-	},
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/Lee182/routerjon.git"
-	},
-	"keywords": [ "nodejs", "expressjs", "letsencrypt", "https", "router" ],
-	"author": "Jonathan T L Lee",
-	"license": "MIT",
-	"bugs": {
-		"url": "https://github.com/Lee182/routerjon/issues"
-	},
-	"homepage": "https://github.com/Lee182/routerjon#readme",
-	"dependencies": {
-		"@root/greenlock": "^3.1.5",
-		"awaity": "^1.0.0",
-		"cjson": "^0.5.0",
-		"express": "^4.17.1",
-		"greenlock": "^3.1.5",
-		"greenlock-express": "^3.1.1",
-		"http-proxy": "^1.18.0",
-		"le-challenge-fs": "^2.0.9",
-		"le-store-certbot": "^2.2.3",
-		"lodash": "^4.17.15",
-		"node-watch": "^0.6.3",
-		"redirect-https": "^1.3.0",
-		"spdy": "^4.0.1"
-	},
-	"devDependencies": {
-		"npm-run-all": "^4.1.5",
-		"request": "^2.88.0"
-	}
+  "name": "routerjon",
+  "version": "0.1.11",
+  "description": "An nodejs expressjs router, hopefully simple to run with npm scripts. Uses letsencrypt for https encryption.",
+  "main": "server/index.js",
+  "bin": {
+    "routerjon": "server/index.js"
+  },
+  "scripts": {
+    "example": "routerjon example/config.json",
+    "test:wait": "node test/wait.js 2000",
+    "test:router": "routerjon test/config.json",
+    "test:server": "node test/http_server.js",
+    "test:ok": "node test/http_client.js",
+    "test:start": "npm-run-all -p test:router test:server",
+    "test:end": "npm-run-all -s test:wait test:ok",
+    "test": "npm-run-all -p test:start test:end"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Lee182/routerjon.git"
+  },
+  "keywords": [
+    "nodejs",
+    "expressjs",
+    "letsencrypt",
+    "https",
+    "router"
+  ],
+  "author": "Jonathan T L Lee",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Lee182/routerjon/issues"
+  },
+  "homepage": "https://github.com/Lee182/routerjon#readme",
+  "dependencies": {
+    "@root/greenlock": "^3.1.5",
+    "awaity": "^1.0.0",
+    "cjson": "^0.5.0",
+    "express": "^4.17.1",
+    "greenlock": "^3.1.5",
+    "greenlock-express": "^3.1.1",
+    "http-proxy": "^1.18.0",
+    "le-challenge-fs": "^2.0.9",
+    "le-store-certbot": "^2.2.3",
+    "lodash": "^4.17.15",
+    "node-watch": "^0.6.3",
+    "redirect-https": "^1.3.0",
+    "spdy": "^4.0.1"
+  },
+  "devDependencies": {
+    "npm-run-all": "^4.1.5",
+    "request": "^2.88.0"
+  }
 }
