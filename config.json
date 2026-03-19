@@ -1,0 +1,63 @@
+{
+  "ports": {
+    "http": 80,
+    "https": 443
+  },
+  "debug": true,
+  "spdy": false,
+  "production": true,
+  "email": "jono-lee@hotmail.co.uk",
+  "router": {
+    "johnleedevelops.com": {
+      ".": {
+        "port": 8083,
+        "http": false
+      },
+      "www.": {
+        "redirect": true,
+        "redirectUrl": "https://johnleedevelops.com"
+      },
+      "mansfield.": 8083,
+      "accounts.": {
+        "port": 9000,
+        "httpOnly": true,
+        "http": true
+      },
+      "sonara.": {
+        "redirect": true,
+        "redirectUrl": "https://sonarasingers.com"
+      }
+    },
+    "sonarasingers.com": {
+      ".": {
+        "port": 8083,
+        "http": false
+      },
+      "www.": {
+        "redirect": true,
+        "redirectUrl": "https://sonarasingers.com"
+      },
+      "mta-sts.": {
+        "port": 9091
+      }
+    },
+    "suttonchat.space": {
+      ".": {
+        "port": 9091,
+        "http": false,
+        "httpOnly": false
+      },
+      "mta-sts.": {
+        "port": 9091
+      },
+      "www.": {
+        "redirect": true,
+        "redirectUrl": "https://suttonchat.space"
+      },
+      "ns1.": {
+        "port": 853
+      },
+      "mail.": 3000
+    }
+  }
+}

@@ -1,23 +1,22 @@
 {
   "ports": {
-    "http": 3400,
-    "https": 3443
+    "http": 80,
+    "https": 443
   },
+  "debug": true,
+  "spdy": false,
   "production": false,
   "email": "jono-lee@hotmail.co.uk",
-  "domains": ["localhost", "blogjono.com", "*.blogjono.com", "opentorah.uk", "*.opentorah.uk"],
   "router": {
-    "localhost": {
-      "http": true,
-      "httpOnly": true,
-      "port": 9000,
-      "wildcard": 1
-    },
-    "localhost:3400": {
-      "http": true,
-      "httpOnly": true,
-      "port": 9000
+    "johnleedevelops.com": {
+      ".": {
+        "port": 8083,
+        "http": false
+      },
+      "www.": {
+        "redirect": true,
+        "redirectUrl": "https://johnleedevelops.com"
+      }
     }
-  },
-  "debug": true
+  }
 }

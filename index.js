@@ -1,7 +1,7 @@
 /* eslint-disable */
 const cjson = require('cjson')
 const GreenlockExpress = require('greenlock-express')
-const Greenlock = require('greenlock')
+const Greenlock = require('@root/greenlock')
 const awaity = require('awaity')
 
 const util = require('util')
@@ -29,6 +29,7 @@ module.exports = function server(config) {
       debug: true,
       packageAgent: pkg.name + '/' + pkg.version,
       packageRoot: __dirname,
+      configDir: "~/.config/greenlock/manager.d",
       maintainerEmail: o.config.email,
       agreeToTerms: true,
       notify: async function (ev, args) {
@@ -98,7 +99,6 @@ module.exports = function server(config) {
 
     function httpsWorker(glx) {
       proxy.on('error', function (e) {
-        debugger
         console.log('proxy error', e.Error)
       })
 
