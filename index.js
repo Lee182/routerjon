@@ -6,6 +6,7 @@ const awaity = require('awaity')
 
 const util = require('util')
 const path = require('path')
+const { debug } = require('console')
 
 const pkg = cjson.load(path.resolve(__dirname, 'package.json'))
 console.log(pkg.name, pkg.version)
@@ -34,7 +35,7 @@ module.exports = function server(config) {
         const bError = ev === 'error'
         const bWarning = ev === 'warning'
         const log = bError || bWarning ? console.error : console.info
-        log(ev, args)
+        log(ev)
         try {
           const bNotFound = bError && args.code === 'ENOTFOUND'
           const bIpError = bError && args.code === 'E_ACME'
@@ -44,7 +45,9 @@ module.exports = function server(config) {
           if (bIpError) {
             console.log('IP ERROR', args.subject)
           } else {
-            console.log(args)
+            if (bError) {
+              console.error(args)
+            }
           }
         } catch (err) {
           console.error(err)
@@ -80,11 +83,9 @@ module.exports = function server(config) {
         console.log(isHttp ? 'http' : 'https', req.headers.host)
       }
       const bNumber = typeof config === 'number'
-      const bHttpOk = isHttp && (config.http || bNumber)
-      if (bHttpOk === false) {
-        return
-        // res.writeHead(301, { Location: 'https://' + req.headers.host + req.path })
-        // res.end()
+      if (isHttp && config.http === false) {
+        res.writeHead(301, { Location: 'https://' + req.headers.host + req.path })
+        res.end()
       }
       if (config.redirectUrl) {
         res.writeHead(302, { Location: config.redirectUrl + req.url })
@@ -155,11 +156,9 @@ module.exports = function server(config) {
           altnames: [sSite]
         })
       })
-
       const gl0 = GreenlockExpress.init(getConfig)
       const gl1 = gl0.serve(httpsWorker)
     } catch (err) {
-      debugger
       console.error(err)
     }
   }

@@ -22,7 +22,6 @@ const config_update = async (config, defaultConfig) => {
     domains_change = !_.isEqual(server.config.domains, conf.domains)
   }
   conf = parseConfigTreeToFlat(conf)
-
   const change_should_restart_server = http_port_change || https_port_change || letencrypt_server_change
 
   if (change_should_restart_server && server !== null) {
