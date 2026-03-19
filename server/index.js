@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 
 // code for https taken from greenlock-express
 const fs_readJSON = require('./fs_readJSON.js')

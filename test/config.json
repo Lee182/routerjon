@@ -1,23 +1,22 @@
 {
   "ports": {
-    "http": 3000,
+    "http": 3400,
     "https": 3443
   },
   "production": false,
-  "domains": [
-    "localhost",
-    "blogjono.com", "*.blogjono.com",
-    "opentorah.uk", "*.opentorah.uk"
-  ],
   "email": "jono-lee@hotmail.co.uk",
+  "domains": ["localhost", "blogjono.com", "*.blogjono.com", "opentorah.uk", "*.opentorah.uk"],
   "router": {
     "localhost": {
-      "http": false,
-      "port": 8080,
+      "http": true,
+      "httpOnly": true,
+      "port": 9000,
       "wildcard": 1
     },
-    "localhost:3000": {
-      "port": 8080
+    "localhost:3400": {
+      "http": true,
+      "httpOnly": true,
+      "port": 9000
     }
   },
   "debug": true
