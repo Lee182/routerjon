@@ -3,6 +3,8 @@ const cjson = require('cjson')
 const GreenlockExpress = require('greenlock-express')
 const Greenlock = require('@root/greenlock')
 const awaity = require('awaity')
+const homedir = require('os').homedir();
+
 
 const util = require('util')
 const path = require('path')
@@ -29,7 +31,7 @@ module.exports = function server(config) {
       debug: true,
       packageAgent: pkg.name + '/' + pkg.version,
       packageRoot: __dirname,
-      configDir: "~/.config/greenlock/manager.d",
+      configDir: homedir + "/.config/greenlock/manager.d",
       maintainerEmail: o.config.email,
       agreeToTerms: true,
       notify: async function (ev, args) {
